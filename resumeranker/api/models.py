@@ -12,10 +12,9 @@ class JobDescription(models.Model):
         return self.title
 
 class Resume(models.Model):
-    job = models.ForeignKey(JobDescription, on_delete=models.CASCADE, related_name='resumes')
+    job = models.ForeignKey(JobDescription, related_name='resumes', on_delete=models.CASCADE)
     file = models.FileField(upload_to='resumes/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    score = models.FloatField(null=True, blank=True)
+    score = models.FloatField(default=0)
 
     def __str__(self):
         return f"Resume for {self.job.title}"
