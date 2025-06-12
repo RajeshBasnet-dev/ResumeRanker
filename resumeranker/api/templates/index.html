@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Matcher</title>
+</head>
+<body>
+    <h1>Resume Matcher</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Upload Resume (PDF):</label><br>
+        <input type="file" name="resume" accept=".pdf" required><br><br>
+
+        <label>Paste Job Description:</label><br>
+        <textarea name="job_description" rows="10" cols="50" required></textarea><br><br>
+
+        <button type="submit">Check Match</button>
+    </form>
+
+    {% if score %}
+        <h2>Match Score: {{ score }}%</h2>
+    {% endif %}
+</body>
+</html>

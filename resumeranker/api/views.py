@@ -5,6 +5,8 @@ from .models import JobDescription, Resume
 from .serializers import JobDescriptionSerializer, ResumeSerializer
 from .analyzer import extract_text_from_pdf, calculate_resume_score
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
 
 class JobDescriptionListCreateView(APIView):
     def get(self, request):
@@ -54,3 +56,24 @@ class ResumeRankView(APIView):
         resumes = job.resumes.all().order_by('-score')
         serializer = ResumeSerializer(resumes, many=True)
         return Response(serializer.data)
+    
+
+
+
+
+def home(request):
+    context = {}
+    if request.method == 'POST' and request.FILES['resume']:
+        resume = request.FILES['resume']
+        job_description = request.POST.get('job_description')
+
+        fs = FileSystemStorage()
+        filename = fs.save(resume.name, resume)
+        uploaded_file_path = fs.path(filename)
+
+        resume_text = extract_text_from_pdf(uploaded_file_path)
+        score = calculate_resume_score(resume_text, job_description)
+
+        context['score'] = round(score, 2)
+
+    return render(request, 'index.html', context)

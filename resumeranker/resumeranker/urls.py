@@ -18,19 +18,22 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from api.views import (
     JobDescriptionListCreateView,
     JobDescriptionDetailView,
     ResumeUploadView,
     ResumeRankView,
+   
 )
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/jobs/', JobDescriptionListCreateView.as_view(), name='job-list-create'),
     path('api/jobs/<int:job_id>/', JobDescriptionDetailView.as_view(), name='job-detail'),
     path('api/jobs/<int:job_id>/resumes/upload/', ResumeUploadView.as_view(), name='resume-upload'),
+    path('', include('api.urls')),
     path('api/jobs/<int:job_id>/resumes/rank/', ResumeRankView.as_view(), name='resume-rank'),
 ]
 
