@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.pyc
+
+# Django
+db.sqlite3
+*.log
+staticfiles/
+media/
+local_settings.py
+
+# Environment variables
+.env
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+.Python
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Migrations (optional if you want to version them manually)
+**/migrations/*.pyc
+**/migrations/__pycache__/
